@@ -34,15 +34,19 @@ func YoThree(arr []int) []int {
 	startP := 0
 	endP := len(arr) - 1
 	sqList := make([]int, len(arr))
-    for i := range arr  {
-		start := math.Floor(math.Sqrt(float64(arr[startP])))
-		end := math.Floor(math.Sqrt(float64(arr[endP])))
+	// if were going to iterate over the array
+	// endP has to start at the 0 index if not we'd get the wrong answer
+	for i := endP; i > -1; i-- {
+		start := math.Floor(float64(arr[startP] * arr[startP]))
+		end := math.Floor(float64(arr[endP] * arr[endP]))
+		fmt.Println(start)
+		fmt.Println(end)
 		if end > start {
 			sqList[i] = int(end)
-			end--
+			endP--
 		} else {
 			sqList[i] = int(start)
-            start++
+			startP++
 		}
 	}
 	return sqList
