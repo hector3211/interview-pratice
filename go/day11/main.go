@@ -50,6 +50,17 @@ func Non(coins []int) int {
     return change + 1
 }
 
+// que time expected
+func WaitTime (arr []int) int{
+    sort.Ints(arr)
+    currentLength := len(arr) -1
+    duration := 0
+    for _,v := range arr {
+        duration = currentLength * v 
+        currentLength--
+    }
+    return duration
+}
 func main() {
 	fmt.Println("hello world!")
 	list := []int{1, 2, 3, 4, 5}
@@ -72,4 +83,8 @@ func main() {
     // non change
     listCoins := []int{5,7,1,1,2,3,22}
     fmt.Println(Non(listCoins))
+
+    // que times
+    queList := []int{3,2,1,2,6}
+    fmt.Println("Querie wait time:",WaitTime(queList))
 }
