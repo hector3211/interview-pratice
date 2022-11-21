@@ -39,27 +39,27 @@ func Win(teams [][]string, res []int) string {
 }
 
 func Non(coins []int) int {
-    sort.Ints(coins)
-    change := 0
-    for _,v := range coins {
-        if v > change + 1 {
-            return change + 1
-        }
-        change += v
-    }
-    return change + 1
+	sort.Ints(coins)
+	change := 0
+	for _, v := range coins {
+		if v > change+1 {
+			return change + 1
+		}
+		change += v
+	}
+	return change + 1
 }
 
 // que time expected
-func WaitTime (arr []int) int{
-    sort.Ints(arr)
-    currentLength := len(arr) -1
-    duration := 0
-    for _,v := range arr {
-        duration = currentLength * v 
-        currentLength--
-    }
-    return duration
+func WaitTime(arr []int) int {
+	sort.Ints(arr)
+	currentLength := len(arr) - 1
+	duration := 0
+	for _, v := range arr {
+		duration = currentLength * v
+		currentLength--
+	}
+	return duration
 }
 func main() {
 	fmt.Println("hello world!")
@@ -76,15 +76,15 @@ func main() {
 	listTeams = append(listTeams, n3)
 	//
 
-    // team winner
+	// team winner
 	results := []int{0, 0, 1}
 	fmt.Println(Win(listTeams, results))
 
-    // non change
-    listCoins := []int{5,7,1,1,2,3,22}
-    fmt.Println(Non(listCoins))
+	// non change
+	listCoins := []int{5, 7, 1, 1, 2, 3, 22}
+	fmt.Println(Non(listCoins))
 
-    // que times
-    queList := []int{3,2,1,2,6}
-    fmt.Println("Querie wait time:",WaitTime(queList))
+	// que times
+	queList := []int{3, 2, 1, 2, 6}
+	fmt.Println("Querie wait time:", WaitTime(queList))
 }
