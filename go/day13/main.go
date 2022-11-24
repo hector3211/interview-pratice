@@ -38,6 +38,7 @@ func (l *DoubleLinked) Append(n *Node) {
 }
 
 func (l *DoubleLinked) Remove(v int) {
+	l.Length--
 	curr := l.Head
 	for curr.Next.Value != v {
 		curr = curr.Next
