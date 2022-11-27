@@ -69,8 +69,8 @@ function PostTriv<T>(node: ANode<T> | undefined): void {
     return;
   } else {
     PostTriv(curr.right);
-    console.log(curr.value);
     PostTriv(curr.left);
+    console.log(curr.value);
   }
 }
 
