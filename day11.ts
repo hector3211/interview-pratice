@@ -16,87 +16,89 @@ export default class Bst<T> {
     if (!this.root) {
       this.root = node;
     } else {
-      let tmp = this.root;
-      if (item > tmp.value) {
-        if (!tmp.right) {
-          tmp.right = node;
-        } else {
-          tmp = tmp.right;
-        }
-      } else {
-        if (!tmp.left) {
-          tmp.left = node;
-        } else {
-          tmp = tmp.left;
+      let curr = this.root;
+      while (curr) {
+        if (item > curr.value) {
+          if (!curr.right) {
+            curr.right = node;
+            return;
+          } else {
+            curr = curr.right;
+          }
+        } else if (item < curr.value) {
+          if (!curr.left) {
+            curr.left = node;
+            return;
+          } else {
+            curr = curr.left;
+          }
         }
       }
     }
   }
-}
 
-// function Append<T>(node: T, item: number): void {
-//   let n = node as ANode<T>;
-//   const newNode = { value: item } as ANode<T>;
-//   if (!n) {
-//     n = newNode;
-//   } else {
-//     let tmp = n;
-//     if (item > tmp.value) {
-//       if (!tmp.right) {
-//         tmp.right = newNode;
-//       } else {
-//         tmp = tmp.right;
-//       }
-//     } else {
-//       if (!tmp.left) {
-//         tmp.left = newNode;
-//       } else {
-//         tmp = tmp.left;
-//       }
-//     }
-//   }
-// }
-
-function InOrder<T>(n: T): void {
-  const node = n as ANode<T>;
-  if (!n) {
-    return;
-  } else {
-    console.log(node.value);
-    InOrder(node.left);
-    InOrder(node.right);
+  search(item: T): boolean {
+    let curr = this.root;
+    while (curr) {
+      if (item === curr.value) {
+        return true;
+      } else if (item > curr.value) {
+        curr = curr.right;
+      } else {
+        curr = curr.left;
+      }
+    }
+    return false;
   }
 }
 
-function PostTriv<T>(node: T): void {
-  const n = node as ANode<T>;
-  if (!n) {
+function InOrder<T>(node: ANode<T> | undefined): void {
+  const curr = node;
+  if (!curr) {
     return;
   } else {
-    PostTriv(n.right);
-    console.log(n.value);
-    PostTriv(n.left);
+    InOrder(curr.left);
+    console.log(curr.value);
+    InOrder(curr.right);
   }
 }
 
-function PreTriv<T>(node: T): void {
-  const n = node as ANode<T>;
-  if (!n) {
+function PostTriv<T>(node: ANode<T> | undefined): void {
+  const curr = node;
+  if (!curr) {
     return;
   } else {
-    PreTriv(n.left);
-    console.log(n.value);
-    PreTriv(n.right);
+    PostTriv(curr.right);
+    console.log(curr.value);
+    PostTriv(curr.left);
+  }
+}
+
+function PreTriv<T>(node: ANode<T> | undefined): void {
+  const curr = node;
+  if (!curr) {
+    return;
+  } else {
+    console.log(curr.value);
+    PreTriv(curr.left);
+    PreTriv(curr.right);
   }
 }
 
 const bs = new Bst();
 bs.append(10);
+bs.append(13);
+bs.append(11);
+bs.append(3);
 bs.append(5);
-bs.append(12);
 console.log(bs);
-InOrder(bs.root);
+console.log("In order Triversal");
+InOrder(bs.root as ANode<number>);
 console.log("\n");
-PostTriv(bs.root);
+console.log("Post order Triversal");
+PostTriv(bs.root as ANode<number>);
 console.log("\n");
-PreTriv(bs.root);
+console.log("Pre order Triversal");
+PreTriv(bs.root as ANode<number>);
+console.log(bs.search(13));
+console.log(bs.search(12));
