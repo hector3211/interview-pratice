@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type Node struct {
 	Value int
@@ -55,26 +58,56 @@ func (d LinkedList) GetAll() {
 
 // Delete a node
 func (d *LinkedList) DeleteNode(item int) {
-	if d.Length == 0 {
+	if d.Length == 0 { // if length id 0 we just exit out of function
 		return
 	}
-	// i dont know if this is going to work (run this code!!)
-	if d.Head.Value == item {
-		d.Head.Next = d.Head
-	}
-	// i dont know if this is going to work (run this code!!)
-	if d.Tail.Value == item {
-		d.Tail.Prev = d.Tail
-	}
-	nodeToDelete := d.Head
-	for nodeToDelete != nil {
-		if nodeToDelete.Value == item {
-			nodeToDelete.Prev.Next = nodeToDelete.Next
-			nodeToDelete.Next.Prev = nodeToDelete.Prev
-			return
+	curr := d.Head    // starting point
+	for curr != nil { // while curr does NOT = nil keep searching
+		if curr.Value == item {
+			break // if we find it we break while loop
 		}
-		nodeToDelete = nodeToDelete.Next
+		curr = curr.Next
 	}
+	// if curr == nil { // if curr = nil we exit function
+	// 	return
+	// }
+	d.Length--            // minus length
+	if curr.Prev != nil { // if we have a previous connect to curr.next
+		curr.Prev.Next = curr.Next
+	}
+	if curr.Next != nil { // if we have a next connect to curr.prev
+		curr.Next.Prev = curr.Prev
+	}
+	if curr == d.Head { // if deleting head move head to next node
+		d.Head = curr.Next
+	}
+	if curr == d.Tail { // if deleting tail move tail to next node
+		d.Tail = curr.Prev
+	}
+}
+
+func (d LinkedList) GetMin() int {
+	curr := d.Head
+	min := math.MaxInt
+	for curr != nil {
+		if curr.Value < min {
+			min = curr.Value
+		}
+		curr = curr.Next
+	}
+	return min
+}
+
+func (d LinkedList) GetMax() int {
+	curr := d.Head
+	max := math.MinInt
+	for curr != nil {
+		if curr.Value > max {
+			max = curr.Value
+		}
+		curr = curr.Next
+	}
+	return max
 }
 
 func main() {
@@ -85,11 +118,18 @@ func main() {
 	dl.Append(11)
 	dl.Append(8)
 	fmt.Println(dl)
-	fmt.Println(dl.Length)
+	fmt.Println("Getting length:", dl.Length)
 	fmt.Println("Getting values....")
 	dl.GetAll()
 	fmt.Println()
+	fmt.Println("deleting....")
 	dl.DeleteNode(11)
+	dl.DeleteNode(8)
+	fmt.Println()
 	fmt.Println("Getting values....")
 	dl.GetAll()
+	fmt.Println("Getting min value")
+	fmt.Println(dl.GetMin())
+	fmt.Println("Getting max value")
+	fmt.Println(dl.GetMax())
 }
