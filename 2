@@ -16,7 +16,6 @@ class Dlist<T> {
   }
 
   preappend(item: T): void {
-    this.length++;
     const newNode = { value: item } as ANode<T>;
     if (!this.head) {
       this.head = this.tail = newNode;
@@ -27,7 +26,6 @@ class Dlist<T> {
   }
 
   append(item: T): void {
-    this.length++;
     const newNode = { value: item } as ANode<T>;
     if (!this.tail) {
       this.tail = this.head = newNode;
